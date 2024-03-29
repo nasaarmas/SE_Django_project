@@ -1,0 +1,302 @@
+[
+    {
+        "social_group": {
+            "name": "Group A",
+            "description": "Description for Group A"
+        },
+        "members": [
+            {
+                "user_id": 1,
+                "role": "admin"
+            },
+            {
+                "user_id": 2,
+                "role": "member"
+            },
+            {
+                "user_id": 3,
+                "role": "guest"
+            }
+        ],
+        "posts": [
+            {
+                "user_id": 1,
+                "content": "Content of the first post in Group A",
+                "media": null
+            },
+            {
+                "user_id": 2,
+                "content": "Content of the second post in Group A",
+                "media": null
+            }
+        ]
+    },
+    {
+        "social_group": {
+            "name": "Group B",
+            "description": "Description for Group B"
+        },
+        "members": [
+            {
+                "user_id": 4,
+                "role": "admin"
+            },
+            {
+                "user_id": 5,
+                "role": "member"
+            }
+        ],
+        "posts": [
+            {
+                "user_id": 4,
+                "content": "Content of the first post in Group B",
+                "media": null
+            },
+            {
+                "user_id": 5,
+                "content": "Content of the second post in Group B",
+                "media": null
+            }
+        ]
+    },
+    {
+        "social_group": {
+            "name": "Group C",
+            "description": "Description for Group C"
+        },
+        "members": [
+            {
+                "user_id": 6,
+                "role": "admin"
+            },
+            {
+                "user_id": 7,
+                "role": "member"
+            },
+            {
+                "user_id": 8,
+                "role": "guest"
+            }
+        ],
+        "posts": [
+            {
+                "user_id": 6,
+                "content": "Content of the first post in Group C",
+                "media": null
+            },
+            {
+                "user_id": 7,
+                "content": "Content of the second post in Group C",
+                "media": null
+            }
+        ]
+    },
+    {
+        "social_group": {
+            "name": "Group D",
+            "description": "Description for Group D"
+        },
+        "members": [
+            {
+                "user_id": 9,
+                "role": "admin"
+            },
+            {
+                "user_id": 10,
+                "role": "member"
+            }
+        ],
+        "posts": [
+            {
+                "user_id": 9,
+                "content": "Content of the first post in Group D",
+                "media": null
+            },
+            {
+                "user_id": 10,
+                "content": "Content of the second post in Group D",
+                "media": null
+            }
+        ]
+    },
+    {
+        "social_group": {
+            "name": "Group E",
+            "description": "Description for Group E"
+        },
+        "members": [
+            {
+                "user_id": 11,
+                "role": "admin"
+            },
+            {
+                "user_id": 12,
+                "role": "member"
+            },
+            {
+                "user_id": 13,
+                "role": "guest"
+            }
+        ],
+        "posts": [
+            {
+                "user_id": 11,
+                "content": "Content of the first post in Group E",
+                "media": null
+            },
+            {
+                "user_id": 12,
+                "content": "Content of the second post in Group E",
+                "media": null
+            }
+        ]
+    },
+    {
+        "social_group": {
+            "name": "Group F",
+            "description": "Description for Group F"
+        },
+        "members": [
+            {
+                "user_id": 1,
+                "role": "admin"
+            },
+            {
+                "user_id": 3,
+                "role": "member"
+            }
+        ],
+        "posts": [
+            {
+                "user_id": 1,
+                "content": "Content of the first post in Group F",
+                "media": null
+            },
+            {
+                "user_id": 3,
+                "content": "Content of the second post in Group F",
+                "media": null
+            }
+        ]
+    },
+    {
+        "social_group": {
+            "name": "Group G",
+            "description": "Description for Group G"
+        },
+        "members": [
+            {
+                "user_id": 4,
+                "role": "admin"
+            },
+            {
+                "user_id": 6,
+                "role": "member"
+            },
+            {
+                "user_id": 8,
+                "role": "guest"
+            }
+        ],
+        "posts": [
+            {
+                "user_id": 4,
+                "content": "Content of the first post in Group G",
+                "media": null
+            },
+            {
+                "user_id": 6,
+                "content": "Content of the second post in Group G",
+                "media": null
+            }
+        ]
+    },
+    {
+        "social_group": {
+            "name": "Group H",
+            "description": "Description for Group H"
+        },
+        "members": [
+            {
+                "user_id": 10,
+                "role": "admin"
+            },
+            {
+                "user_id": 12,
+                "role": "member"
+            }
+        ],
+        "posts": [
+            {
+                "user_id": 10,
+                "content": "Content of the first post in Group H",
+                "media": null
+            },
+            {
+                "user_id": 12,
+                "content": "Content of the second post in Group H",
+                "media": null
+            }
+        ]
+    },
+    {
+        "social_group": {
+            "name": "Group I",
+            "description": "Description for Group I"
+        },
+        "members": [
+            {
+                "user_id": 2,
+                "role": "admin"
+            },
+            {
+                "user_id": 5,
+                "role": "member"
+            },
+            {
+                "user_id": 7,
+                "role": "guest"
+            }
+        ],
+        "posts": [
+            {
+                "user_id": 2,
+                "content": "Content of the first post in Group I",
+                "media": null
+            },
+            {
+                "user_id": 5,
+                "content": "Content of the second post in Group I",
+                "media": null
+            }
+        ]
+    },
+    {
+        "social_group": {
+            "name": "Group J",
+            "description": "Description for Group J"
+        },
+        "members": [
+            {
+                "user_id": 13,
+                "role": "admin"
+            },
+            {
+                "user_id": 3,
+                "role": "member"
+            }
+        ],
+        "posts": [
+            {
+                "user_id": 13,
+                "content": "Content of the first post in Group J",
+                "media": null
+            },
+            {
+                "user_id": 3,
+                "content": "Content of the second post in Group J",
+                "media": null
+            }
+        ]
+    }
+]

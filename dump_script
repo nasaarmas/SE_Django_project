@@ -1,0 +1,7 @@
+while IFS= read -r lines; do echo -n $lines | egrep -v "(^#.*|^$)" | xargs | base64; done < .env> .env_b64;
+export $(while IFS= read -r line; do echo -n $line | base64 -d; done < .env_b64);
+mysqldump -u $SQL_DB_USER -h$SQL_DB_HOST -p$SQL_DB_PASSWORD $SQL_DB_NAME > ipr_database_DEV_dump.sql;
+
+
+
+

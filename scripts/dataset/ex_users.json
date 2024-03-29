@@ -1,0 +1,122 @@
+[
+    {
+        "email": "user1@example.com",
+        "email_activated": true,
+        "first_name": "John",
+        "last_name": "Doe",
+        "gender": "MALE",
+        "date_of_birth": "1990-05-15",
+        "city": 1,
+        "status_type": "online",
+        "terms_accepted": true,
+        "terms_accepted_date": "2023-11-24T08:00:00Z"
+    },
+    {
+        "email": "user2@example.com",
+        "email_activated": true,
+        "first_name": "Alice",
+        "last_name": "Smith",
+        "gender": "FEMALE",
+        "date_of_birth": "1988-09-20",
+        "city": 2,
+        "status_type": "offline",
+        "terms_accepted": true,
+        "terms_accepted_date": "2023-10-12T14:30:00Z"
+    },
+    {
+        "email": "user3@example.com",
+        "email_activated": true,
+        "first_name": "Michael",
+        "last_name": "Johnson",
+        "gender": "MALE",
+        "date_of_birth": "1985-03-10",
+        "city": 3,
+        "status_type": "online",
+        "terms_accepted": true,
+        "terms_accepted_date": "2023-09-05T11:45:00Z"
+    },
+    {
+        "email": "user4@example.com",
+        "email_activated": true,
+        "first_name": "Emma",
+        "last_name": "Brown",
+        "gender": "FEMALE",
+        "date_of_birth": "1995-11-28",
+        "city": 4,
+        "status_type": "offline",
+        "terms_accepted": true,
+        "terms_accepted_date": "2023-08-17T17:20:00Z"
+    },
+    {
+        "email": "user5@example.com",
+        "email_activated": true,
+        "first_name": "Daniel",
+        "last_name": "Wilson",
+        "gender": "MALE",
+        "date_of_birth": "1979-07-03",
+        "city": 1,
+        "status_type": "online",
+        "terms_accepted": true,
+        "terms_accepted_date": "2023-07-02T09:10:00Z"
+    },
+    {
+        "email": "user6@example.com",
+        "email_activated": true,
+        "first_name": "Olivia",
+        "last_name": "Miller",
+        "gender": "FEMALE",
+        "date_of_birth": "1992-12-15",
+        "city": 2,
+        "status_type": "offline",
+        "terms_accepted": true,
+        "terms_accepted_date": "2023-06-21T16:00:00Z"
+    },
+    {
+        "email": "user7@example.com",
+        "email_activated": true,
+        "first_name": "Matthew",
+        "last_name": "Garcia",
+        "gender": "MALE",
+        "date_of_birth": "1983-04-22",
+        "city": 3,
+        "status_type": "online",
+        "terms_accepted": true,
+        "terms_accepted_date": "2023-05-30T13:25:00Z"
+    },
+    {
+        "email": "user8@example.com",
+        "email_activated": true,
+        "first_name": "Sophia",
+        "last_name": "Davis",
+        "gender": "FEMALE",
+        "date_of_birth": "1987-08-08",
+        "city": 4,
+        "status_type": "offline",
+        "terms_accepted": true,
+        "terms_accepted_date": "2023-04-14T10:15:00Z"
+    },
+    {
+        "email": "user9@example.com",
+        "email_activated": true,
+        "first_name": "David",
+        "last_name": "Taylor",
+        "gender": "MALE",
+        "date_of_birth": "1998-01-19",
+        "city": 1,
+        "status_type": "online",
+        "terms_accepted": true,
+        "terms_accepted_date": "2023-03-27T08:45:00Z"
+    },
+    {
+        "email": "user10@example.com",
+        "email_activated": true,
+        "first_name": "Ava",
+        "last_name": "Anderson",
+        "gender": "FEMALE",
+        "date_of_birth": "1993-06-05",
+        "city": 2,
+        "status_type": "offline",
+        "terms_accepted": true,
+        "terms_accepted_date": "2023-02-09T14:00:00Z"
+    }
+]

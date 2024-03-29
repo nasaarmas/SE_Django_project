@@ -1,0 +1,28 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "39c0651e1651e4154e4cf61c5b50d5637ff0be3fe5a5e20682a9a6e17de08c57"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.9"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "drfdocs": {
+            "hashes": [
+                "sha256:a94d63d714aa2796d85b695a665b17092260ab2447b9aed7453bf914a0056e1e"
+            ],
+            "index": "pypi",
+            "version": "==0.0.11"
+        }
+    },
+    "develop": {}
+}

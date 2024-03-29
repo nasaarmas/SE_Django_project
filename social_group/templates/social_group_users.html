@@ -1,0 +1,147 @@
+<!-- social_group_users.html -->
+
+{% extends 'social_group_base.html' %}
+
+{% block content %}
+    <div class="container mt-3">
+        <h3>Members of {{ group.name }}</h3>
+
+        <!-- Search form for group members -->
+        <form method="get" action="" class="mb-3">
+            <div class="input-group mb-3">
+                <input type="text" name="search_members" class="form-control" placeholder="Search Group Members"
+                       value="{{ search_members }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="list-group mb-3">
+
+            {% for member in members %}
+                <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #D0D0D0 !important;">
+                    {{ member.user.get_full_name }} {{ member.user.email }}
+                    <div>
+                        <span class="badge badge-secondary badge-pill p-2 mx-2">{{ member.role }}</span>
+                        {% if request_user_member_is_admin and member.user.id is not request.user.id %}
+                            <button class="btn btn-primary btn-sm grant-role-{{ member.id }}"
+                                    current-role="{{ member.role }}">{% if member.role == "member" %} Grant role
+                                moderator {% else %} Grant role member {% endif %}</button>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted">No members found.</p>
+            {% endfor %}
+        </div>
+        <h3 style="margin-top: 2rem;">Search for users to invite</h3>
+        <!-- Search form for non-members -->
+        <form method="get" action="" class="mb-3">
+            <div class="input-group mb-3">
+                <input type="text" name="search_non_members" class="form-control" placeholder="Search Users to Invite"
+                       value="{{ search_non_members }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="list-group">
+
+            {% for user in non_members %}
+                <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #D0D0D0 !important;">
+                    {{ user.get_full_name }}
+                    <button type="button" class="btn btn-primary btn-sm invite-btn" data-user-id="{{ user.id }}">
+                        Invite
+                    </button>
+                </div>
+            {% empty %}
+                <p class="text-muted">No users to invite.</p>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.invite-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const user_id = this.getAttribute('data-user-id');
+                const baseUrl = `{% url 'invite_user' group.id '999999' %}`;
+// Replace the placeholder with the actual user ID in JavaScript
+                const actualUrl = baseUrl.replace('999999', user_id);
+                fetch(actualUrl, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({user_id: user_id})
+                })
+
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            alert('Invitation sent successfully.');
+                            // Handle successful invitation (e.g., show a message, remove the invite button)
+                        } else {
+                            console.error('Error:', data.message);
+                            alert('User already invited.'); // Show error message
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Event listener for buttons to grant roles
+            document.querySelectorAll('button[class^="btn btn-primary btn-sm grant-role-"]').forEach(button => {
+                button.addEventListener('click', function () {
+                    var memberId = this.className.split('-').pop(); // Extracts member ID from the button class
+                    var currentRole = this.getAttribute('current-role'); // Use the current-role attribute
+                    var newRole = currentRole === "member" ? "moderator" : "member"; // Determine the new role based on the current role
+                    var socialGroupId = "{{ current_group_id }}"; // Gets the social group ID from the template context
+
+                    // Fetch API POST request to update the member's role
+                    fetch('/social-groups/' + socialGroupId + '/users', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: `member_id=${memberId}&new_role=${newRole}`
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json(); // or .text() if the response is not JSON
+                        })
+                        .then(data => {
+                            // Handle success (e.g., updating the button text and role badge)
+                            console.log('Success:', data);
+                            location.reload(); // Simple way to refresh and reflect changes
+                        })
+                        .catch((error) => {
+                            // Handle error
+                            console.error('Error:', error);
+                        });
+                });
+            });
+        });
+
+    </script>
+    <div style="margin-top: 2rem"></div>
+{% endblock %}

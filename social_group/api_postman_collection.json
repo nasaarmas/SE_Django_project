@@ -1,0 +1,248 @@
+{
+    "info": {
+        "_postman_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "name": "Django Social Groups API",
+        "description": "Postman collection for Django Social Groups API endpoints",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "GET Social Group Members",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups/{{social_group_id}}/members",
+                    "host": [
+                        "localhost"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups",
+                        "{{social_group_id}}",
+                        "members"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "POST Social Group Members",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups/{{social_group_id}}/members",
+                    "host": [
+                        "localhost:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups",
+                        "{{social_group_id}}",
+                        "members"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "PATCH Social Group Members",
+            "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups/{{social_group_id}}/members/{{member_id}}",
+                    "host": [
+                        "localhost:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups",
+                        "{{social_group_id}}",
+                        "members",
+                        "{{member_id}}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "DELETE Social Group Members",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups/{{social_group_id}}/members/{{member_id}}",
+                    "host": [
+                        "localhost:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups",
+                        "{{social_group_id}}",
+                        "members",
+                        "{{member_id}}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "GET Social Groups",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups",
+                    "host": [
+                        "localhost:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "POST Social Groups",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups",
+                    "host": [
+                        "localhost:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "PATCH Social Groups",
+            "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups/{{social_group_id}}",
+                    "host": [
+                        "localhost:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups",
+                        "{{social_group_id}}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "DELETE Social Groups",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups/{{social_group_id}}",
+                    "host": [
+                        "localhost:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups",
+                        "{{social_group_id}}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "GET Social Group Posts",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups/{{social_group_id}}/posts",
+                    "host": [
+                        "localhost:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups",
+                        "{{social_group_id}}",
+                        "posts"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "POST Social Group Posts",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups/{{social_group_id}}/posts",
+                    "host": [
+                        "localhost:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups",
+                        "{{social_group_id}}",
+                        "posts"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "PATCH Social Group Posts",
+            "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups/{{social_group_id}}/posts/{{post_id}}",
+                    "host": [
+                        "localhost:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups",
+                        "{{social_group_id}}",
+                        "posts",
+                        "{{post_id}}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "DELETE Social Group Posts",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/api/social-groups/{{social_group_id}}/posts/{{post_id}}",
+                    "host": [
+                        "localhost:8000"
+                    ],
+                    "path": [
+                        "api",
+                        "social-groups",
+                        "{{social_group_id}}",
+                        "posts",
+                        "{{post_id}}"
+                    ]
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-success">
+    <div class="container-fluid justify-content-between position-relative">
+        <!-- Left Aligned - Brand and Toggler -->
+        <div class="d-flex align-items-center">
+            <a class="navbar-brand" href="/">Dashboard</a>
+        </div>
+
+        <!-- Centered Links -->
+        <div class="collapse navbar-collapse justify-content-center center-md" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% if current_group_id %}{% url 'social_group_detail' pk=current_group_id %}{% endif %}">Social Group Main Page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% if current_group_id %}{% url 'social_group_events' social_group_id=current_group_id %}{% endif %}">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% if current_group_id %}{% url 'social_group_memebers' current_group_id %}{% endif %}">Users</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right Aligned Links -->
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav flex-grow-0 ml-auto">
+                <a class="nav-item nav-link" href="{% url 'social_groups' %}">Social Groups</a>
+                <a class="nav-item nav-link" href="/settings">User Settings</a>
+                <a class="nav-item btn btn-outline-secondary btn-sm nav-link" href="{% url 'logout' %}">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,18 @@
+<!-- user_settings.html -->
+{% extends 'base.html' %}
+
+{% block title %}User Settings{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-4">User Settings</h1>
+  <p class="lead">Customize your account settings here.</p>
+  <hr class="my-4">
+
+  <!-- Przyciski nawigacyjne -->
+  <a href="{% url 'delete_account' %}" class="btn btn-danger">Delete Account</a>
+  <a href="{% url 'change_password' %}" class="btn btn-primary">Change Password</a>
+  <a href="" class="btn btn-info">Payment History</a>
+  <a href="/" class="btn btn-secondary">Back to Home</a>
+</div>
+{% endblock %}

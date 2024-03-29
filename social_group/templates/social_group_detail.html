@@ -1,0 +1,466 @@
+{% extends 'social_group_base.html' %}
+
+{% block content %}
+
+    <div class="my-5">
+        <div class="container">
+            <h1>{{ social_group.name }}</h1>
+            <p>{{ social_group.description }}</p>
+
+            <div class="btn-group">
+                <a href="{% url 'social_group_add_post' social_group_id=social_group.id %}" class="btn btn-primary">Create
+                    Post</a>
+                <form style="margin-left: 1rem;" action="{% url 'leave_group' social_group.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">Leave Group</button>
+                </form>
+
+                <!-- Delete Group Button for Admin -->
+                {% if request.user == admin_user %}
+                    <!-- Button to trigger confirmation dialog -->
+                    <button style="margin-left: 1rem;" class="btn btn-danger" data-toggle="modal"
+                            data-target="#confirmDeleteModal">Delete Group
+                    </button>
+
+                    <!-- Confirmation dialog modal -->
+                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+                         aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete this group?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <form method="post" action="{% url 'delete_group' social_group.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+        <form method="get" action="" class="mb-3" style="margin-top: 1rem;">
+            <div class="input-group mb-3">
+                <input type="text" name="search_posts" class="form-control" placeholder="Search Posts"
+                       value="{{ search_posts }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+
+            <div class="posts-container">
+                {% for post in posts %}
+                    <div class="post card my-5" id="post-{{ post.id }}" style="background-color: #778899 !important;">
+                        <div class="post-header card-header">
+                            <h5>{{ post.user.first_name }} {{ post.user.last_name }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="py-1 bg-white rounded">
+                                <p id="post-content-{{ post.id }}"><span>{{ post.content }}</span></p>
+                            </div>
+                            <div class="edit-post-form" style="display: none;" id="edit-post-form-{{ post.id }}">
+                        <textarea class="form-control post-edit-textarea"
+                                  id="edit-post-textarea-{{ post.id }}">{{ post.content }}</textarea>
+                                <button type="button" class="btn btn-primary save-post-btn"
+                                        data-post-id="{{ post.id }}">Save
+                                </button>
+                                <button type="button" class="btn btn-secondary cancel-post-edit-btn"
+                                        data-post-id="{{ post.id }}">
+                                    Cancel
+                                </button>
+                            </div>
+                            <div class="my-1" style="border-bottom: 2px solid lightgray;"></div>
+                            <div class="row px-0 mx-0">
+                                <span class="col col-12 col-md-6">Created date: <span
+                                        style="font-weight: 600"> {{ post.created_at|date:"Y-m-d H:i" }} </span></span>
+                                <div class="col col-12 col-md-6 d-flex my-1 my-md-0 justify-content-end">
+                                    <!-- Separate div for Report Button -->
+                                    {% if post.user != request.user %}
+                                        <div class="report-button-container" style="margin-right: 10px;">
+                                            <button class="btn btn-info report-post-btn mx-1"
+                                                    data-post-id="{{ post.id }}"
+                                                    onClick="reportPostToModeration('{{ post.id }}', '{{ social_group.id }}')">
+                                                Report to moderation
+                                            </button>
+                                        </div>
+                                    {% endif %}
+
+                                    <!-- Div for Edit/Delete buttons -->
+                                    {% if request.user == post.user or user_is_admin_or_moderator %}
+                                        <div class="edit-delete-button-container">
+                                            <button class="btn btn-secondary edit-post-btn mx-1 "
+                                                    data-post-id="{{ post.id }}"
+                                                    data-edit-url="{% url 'edit_post' post.id %}">Edit Post
+                                            </button>
+                                            <button class="btn btn-danger delete-post-btn" data-post-id="{{ post.id }}">
+                                                Delete Post
+                                            </button>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="my-4 w-100" style="border-bottom: 2px solid lightgray;">
+                                <h5 class="fs-5"> Komentarze</h5>
+                            </div>
+
+
+                            <!-- Comments section -->
+                            <!-- Enhanced Comments Section -->
+                            <div class="mt-4">
+                                <div class="comments-container mt-4">
+                                    {% for comment in post.comments.all %}
+                                        <div class="comment mb-3 p-3 bg-light rounded" id="comment-{{ comment.id }}">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h6 class="mb-0">{{ comment.user.get_full_name }}</h6>
+                                                <!-- Conditionally render Edit and Delete buttons -->
+
+                                                <div>
+                                                    {% if request.user != comment.user %}
+
+
+                                                        <button class="btn btn-sm btn-secondary report-comment-btn mx-1"
+                                                                data-comment-id="{{ comment.id }}"
+                                                                onClick="reportCommentToModeration('{{ post.id }}', '{{ comment.id }}')">
+                                                            Report to moderation
+                                                        </button>
+
+                                                    {% endif %}
+                                                    {% if request.user == comment.user or user_is_admin_or_moderator %}
+                                                        <button class="btn btn-outline-secondary btn-sm edit-comment-btn"
+                                                                data-comment-id="{{ comment.id }}">Edit
+                                                        </button>
+                                                        <button class="btn btn-outline-danger btn-sm delete-comment-btn"
+                                                                data-comment-id="{{ comment.id }}">Delete
+                                                        </button>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <p class="comment-content mt-2"
+                                               id="comment-content-{{ comment.id }}">{{ comment.content }}</p>
+                                            <div class="edit-comment-form" style="display: none;"
+                                                 id="edit-comment-form-{{ comment.id }}">
+                                        <textarea class="form-control mb-2 comment-edit-textarea"
+                                                  id="edit-comment-textarea-{{ comment.id }}">{{ comment.content }}</textarea>
+                                                <button type="button" class="btn btn-primary btn-sm save-comment-btn"
+                                                        data-comment-id="{{ comment.id }}">Save
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-secondary btn-sm cancel-comment-edit-btn"
+                                                        data-comment-id="{{ comment.id }}">Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    <form class="comment-form mt-3" data-post-id="{{ post.id }}">
+                                        {% csrf_token %}
+                                        <textarea class="form-control mb-2" name="content"
+                                                  placeholder="Add a comment..."
+                                                  rows="3"></textarea>
+                                        <button type="submit" class="btn btn-primary">Comment</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.comment-form').forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const postId = this.getAttribute('data-post-id');
+                const formData = new FormData(this);
+
+                fetch(`{% url 'add_comment' 0 %}`.replace('0', postId), {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Build new comment HTML dynamically with response data
+                            const commentCreationForm = this;
+                            // Clear the form
+                            commentCreationForm.reset();
+                            window.location.reload();
+                        } else {
+                            console.error('Error:', data.errors);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+
+        // Script for editing comments
+        document.querySelectorAll('.edit-comment-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const commentId = this.getAttribute('data-comment-id');
+                document.getElementById(`comment-content-${commentId}`).style.display = 'none';
+                this.style.display = 'none';
+                document.getElementById(`edit-comment-form-${commentId}`).style.display = 'block';
+            });
+        });
+
+
+        document.querySelectorAll('.delete-post-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const postId = this.getAttribute('data-post-id');
+                if (confirm('Are you sure you want to delete this post?')) {
+                    fetch("{% url 'social_group_delete_post' 0 %}".replace('0', postId), {
+                        method: "DELETE",
+                        headers: {
+                            "X-CSRFToken": "{{ csrf_token }}"
+                        },
+                        credentials: 'same-origin'
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                document.getElementById('post-' + postId).remove();
+                            } else {
+                                alert('Error: Post could not be deleted.');
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                }
+            });
+        });
+
+        function reportPostToModeration(postId, socialGroupId) {
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value; // Fetch CSRF token
+
+            fetch(`/social-groups/${socialGroupId}/posts/${postId}/report`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({post_id: postId})
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Report successful:', data);
+                    alert('The post has been reported to moderation.');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('There was an error reporting the post.');
+                });
+        }
+
+        function reportCommentToModeration(postId, commentId) {
+            // Fetch CSRF token from the CSRF token cookie or meta tag
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            fetch(`/post/${postId}/comment/${commentId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({
+                    // You can add additional data if needed
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Report successful:', data);
+                    alert('The comment has been reported to moderation.');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('There was an error reporting the comment.');
+                });
+        }
+
+        // Handling comment delete buttons
+        document.querySelectorAll('.delete-comment-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const commentId = this.getAttribute('data-comment-id');
+                if (confirm('Are you sure you want to delete this comment?')) {
+                    fetch(`{% url 'delete_comment' 0 %}`.replace('0', commentId), {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        },
+                        credentials: 'same-origin'
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('Server responded with an error!');
+                            }
+                        })
+                        .then(data => {
+                            if (data.status === 'success') {
+                                // Remove the comment from the view
+                                document.getElementById(`comment-${commentId}`).remove();
+                            } else {
+                                console.error('Error:', data.message);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            alert('Error: Comment could not be deleted.');
+                        });
+                }
+            });
+        });
+
+
+        document.querySelectorAll('.save-comment-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const commentId = this.getAttribute('data-comment-id');
+                const updatedContent = document.getElementById(`edit-comment-textarea-${commentId}`).value.trim(); // Trim to remove whitespace
+
+                if (updatedContent === '') {
+                    // If content is empty after editing, revert changes
+                    document.getElementById(`comment-content-${commentId}`).style.display = 'block';
+                    document.getElementById(`edit-comment-form-${commentId}`).style.display = 'none';
+                    document.querySelector(`.edit-comment-btn[data-comment-id="${commentId}"]`).style.display = 'inline-block';
+                    alert('Comment content cannot be empty. Changes were not saved.');
+                    return;
+                }
+
+                console.log('Saving comment:', commentId, updatedContent); // Debug: sprawdź, czy wartości są poprawne
+
+                fetch(`{% url 'social_group_edit_comment' %}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({id: commentId, content: updatedContent})
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Response data:', data); // Debug: sprawdź odpowiedź z serwera
+                        if (data.status === 'success') {
+                            document.getElementById(`comment-content-${commentId}`).textContent = updatedContent;
+                            document.getElementById(`comment-content-${commentId}`).style.display = 'block';
+                            document.getElementById(`edit-comment-form-${commentId}`).style.display = 'none';
+                            document.querySelector(`.edit-comment-btn[data-comment-id="${commentId}"]`).style.display = 'inline-block';
+                        } else {
+                            console.error('Error:', data);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+
+        // Handling cancel edit for comments
+        document.querySelectorAll('.cancel-comment-edit-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const commentId = this.getAttribute('data-comment-id');
+                document.getElementById(`comment-content-${commentId}`).style.display = 'block';
+                document.getElementById(`edit-comment-form-${commentId}`).style.display = 'none';
+                document.querySelector(`.edit-comment-btn[data-comment-id="${commentId}"]`).style.display = 'inline-block';
+            });
+        });
+
+        // Handling cancel edit for posts
+        document.querySelectorAll('.cancel-post-edit-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const postId = this.getAttribute('data-post-id');
+                document.getElementById(`post-content-${postId}`).style.display = 'block';
+                document.getElementById(`edit-post-form-${postId}`).style.display = 'none';
+                document.querySelector(`.edit-post-btn[data-post-id="${postId}"]`).style.display = 'inline-block';
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Handle edit post button click
+            document.querySelectorAll('.edit-post-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const postId = this.getAttribute('data-post-id');
+                    document.getElementById(`post-content-${postId}`).style.display = 'none';
+                    this.style.display = 'none';
+                    document.getElementById(`edit-post-form-${postId}`).style.display = 'block';
+                });
+            });
+
+            // Handle save post changes
+            document.querySelectorAll('.save-post-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const postId = this.getAttribute('data-post-id');
+                    const updatedContent = document.getElementById(`edit-post-textarea-${postId}`).value.trim(); // Trim to remove whitespace
+
+                    if (updatedContent === '') {
+                        // If content is empty after editing, revert changes
+                        document.getElementById(`post-content-${postId}`).style.display = 'block';
+                        document.getElementById(`edit-post-form-${postId}`).style.display = 'none';
+                        document.querySelector(`.edit-post-btn[data-post-id="${postId}"]`).style.display = 'inline-block';
+                        alert('Post content cannot be empty. Changes were not saved.');
+                        return;
+                    }
+
+                    fetch(`/edit-post/${postId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({content: updatedContent})
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.status === 'success') {
+                                const postContentElement = document.getElementById(`post-content-${postId}`);
+                                postContentElement.textContent = updatedContent;
+                                postContentElement.style.display = 'block';
+                                document.getElementById(`edit-post-form-${postId}`).style.display = 'none';
+                                document.querySelector(`.edit-post-btn[data-post-id="${postId}"]`).style.display = 'inline-block';
+                            } else {
+                                console.error('Error:', data);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+        });
+
+    </script>
+
+
+{% endblock %}
+

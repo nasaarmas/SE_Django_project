@@ -1,0 +1,13 @@
+{% extends 'social_group_base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2>Create Event</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Create Event</button>
+        </form>
+    </div>
+    <div style="margin-top: 2rem"></div>
+{% endblock %}

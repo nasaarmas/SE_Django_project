@@ -1,0 +1,104 @@
+{% extends 'social_group_base.html' %}
+
+{% block content %}
+    <div class="container">
+        <a href="{% url 'create_social_group_event' social_group_id=social_group_id %}" style="margin-top: 2rem;"
+           class="btn btn-primary">Create
+            Event</a>
+
+        <h2 class="mt-4">My Events</h2>
+        <ul class="list-group">
+            {% for event in user_events %}
+                <li class="list-group-item d-flex justify-content-between align-items-center"
+                    data-toggle="modal" data-target="#eventModal{{ event.id }}"
+                    style="cursor:pointer; background-color: #D0D0D0 !important;">
+                <span>
+                    {{ event.name }}
+                </span>
+                    <!-- Modal dla szczegółów wydarzenia -->
+                    <div class="modal fade" id="eventModal{{ event.id }}" tabindex="-1" role="dialog"
+                         aria-labelledby="eventModalLabel{{ event.id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="eventModalLabel{{ event.id }}">{{ event.name }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        <strong>Description:</strong> {{ event.description|default:"No description provided." }}
+                                    </p>
+                                    <p><strong>Budget:</strong> {{ event.budget }}</p>
+                                    <p><strong>Sponsors:</strong> {{ event.sponsors|default:"No sponsors." }}</p>
+                                    <p><strong>Tournament:</strong> {{ event.get_is_tournament_display }}</p>
+                                    <!-- Możesz dodać więcej szczegółów zgodnie z potrzebami -->
+                                </div>
+                                <div class="modal-footer">
+                                    {% if event.is_organizer %}
+                                        <form action="{% url 'delete_event' social_group_id=social_group_id event_id=event.id %}"
+                                              method="post" class="event-action-form">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete Event</button>
+                                        </form>
+                                    {% endif %}
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No events found.</li>
+            {% endfor %}
+        </ul>
+
+        <h2 class="mt-4">Available Events</h2>
+        <ul class="list-group">
+            {% for event in available_events %}
+                <li class="list-group-item d-flex justify-content-between align-items-center"
+                    style="background-color: #D0D0D0 !important;">
+                <span data-toggle="modal" data-target="#availableEventModal{{ event.id }}" style="cursor:pointer;">
+                    {{ event.name }} - {{ event.description }}
+                </span>
+
+                    <!-- Modal for event details -->
+                    <div class="modal fade" id="availableEventModal{{ event.id }}" tabindex="-1" role="dialog"
+                         aria-labelledby="availableEventModalLabel{{ event.id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        id="availableEventModalLabel{{ event.id }}">{{ event.name }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        <strong>Description:</strong> {{ event.description|default:"No description provided." }}
+                                    </p>
+                                    <p><strong>Budget:</strong> {{ event.budget }}</p>
+                                    <p><strong>Sponsors:</strong> {{ event.sponsors|default:"No sponsors." }}</p>
+                                    <p><strong>Tournament:</strong> {{ event.get_is_tournament_display }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form action="{% url 'join_event' social_group_id=social_group_id event_id=event.id %}"
+                          method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-primary">Join Event</button>
+                    </form>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No available events.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
